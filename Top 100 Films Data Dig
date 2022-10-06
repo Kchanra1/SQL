@@ -1,6 +1,6 @@
 
 /* Source: http://www.boxofficemojo.com/alltime/world/ */
-
+/* Data set and table currated by github user pamelafox for public use */
 
 CREATE TABLE topmovies(
    Rank        INTEGER,
