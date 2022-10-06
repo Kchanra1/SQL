@@ -1,0 +1,36 @@
+-- Create a specialty grocery store database
+
+CREATE TABLE the_chip_store 
+(id INTEGER PRIMARY KEY, 
+chip TEXT, price NUMERIC, 
+brand TEXT, 
+stock_day TEXT, 
+aisle INTEGER);
+
+INSERT INTO the_chip_store VALUES 
+(1, "Cheddar & Sour Cream Potato Chips", 4.69, "Frito Lay", "Monday", 5), 
+(2, "Nacho Cheese Doritos", 4.25, "Frito Lay", "Monday", 5), 
+(3, "Pretzel Rods", 3.60, "Sniders", "Wednesday", 3), 
+(4, "Cool Ranch Doritos", 4.25, "Frito Lay", "Monday", 5), (5, "Mini Pretzels", 3.60, "Sniders", "Wednesday", 3), 
+(6, "Original Ruffle Potato Chips", 4.69, "Frito Lay", "Monday", 5), 
+(7, "Sour Cream and Onion Potato Chips", 4.69, "Frito Lay", "Monday", 5), 
+(8, "Baked Cheddar Ruffle Potato Chips", 3.00, "Frito Lay", "Friday", 6), 
+(9, "Baked Nacho Cheese Doritos", 3.00, "Frito Lay", "Friday", 6), 
+(10, "Baked Cheetos", 3.00, "Frito Lay", "Friday", 6), 
+(11, "Baked Lays Potato Chips", 3.00, "Frito Lay", "Friday", 6), 
+(12, "Original Cheez-It", 4.89, "Kellog", "Tuesday", 3), (13, "Peanut Butter Crackers", 3.89, "Keebler", "Tuesday", 3), 
+(14, "White Cheddar Cheez-It", 4.89,  "Kellog", "Tuesday", 3), 
+(15, "Toasted Cheez-It", 4.89, "Kellog", "Tuesday", 3);
+
+-- Display the database ordered by price.
+SELECT * FROM store
+ORDER BY price desc; 
+
+-- What are the top five most expensive items?
+SELECT * FROM the_chip_store ORDER BY price DESC LIMIT 5;
+
+-- What is the average price of the grocery store items?
+SELECT AVG(price) FROM the_chip_store;
+
+-- What items are stocked on Tuesday and are located on aisle 3?
+SELECT * FROM the_chip_store WHERE stock_day = 'Tuesday' AND aisle = 3;
