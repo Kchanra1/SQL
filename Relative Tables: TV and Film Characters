@@ -1,0 +1,51 @@
+-- Created a table of tv and film characters. Included id, full name, age, tv/film show, and their supporting character.
+
+CREATE TABLE tv_characters 
+    (id INTEGER PRIMARY KEY,
+    fullname TEXT, 
+    age INTEGER, 
+    tv_show TEXT, 
+    supporting_char TEXT);
+    
+INSERT INTO tv_characters VALUES (1, 'Olivia Dunham', 32, 'Fringe', 'Peter Bishop');
+
+INSERT INTO tv_characters VALUES (2, 'Peter Bishop', 35, 'Fringe', 'Walter Bishop');
+
+INSERT INTO tv_characters VALUES (3, 'Walter Bishop', 64, 'Fringe', 'Astrid Farnesworth');
+
+INSERT INTO tv_characters VALUES (4, 'Astrid Farnesworth', 64, 'Fringe', 'Jean the Cow');
+
+INSERT INTO tv_characters VALUES (5, 'Sam Witwicky', 19, 'Transformers 2', 'Mikaela Banes');
+
+INSERT INTO tv_characters VALUES (6, 'Mikaela Banes', 20, 'Transformers 2', 'Sam Witwicky');
+    
+INSERT INTO tv_characters VALUES (7, 'Harry Potter', 20, 'Harry Potter 3', 'Hermoine Granger');
+
+INSERT INTO tv_characters VALUES (8, 'Hermoine Granger', 20, 'Harry Potter 3', 'Ron Weasly');
+
+INSERT INTO tv_characters VALUES (9, 'Ron Weasly', 20, 'Harry Potter 3', 'Harry Potter');
+
+
+-- Created a second table containing jobs/careers of the tv characters which are linked to them by id.
+
+CREATE TABLE jobs (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    job_id INTEGER);
+    
+INSERT INTO jobs VALUES (1, 'FBI Agent', 1);
+INSERT INTO jobs VALUES (2, 'FBI Agent', 4);
+INSERT INTO jobs VALUES (3, 'FBI Consultant', 2);
+INSERT INTO jobs VALUES (4, 'FBI Consultant', 3);
+INSERT INTO jobs VALUES (5, 'Full-time Student', 5);
+INSERT INTO jobs VALUES (6, 'Full-time Student', 6);
+INSERT INTO jobs VALUES (7, 'Full-time Student', 7);
+INSERT INTO jobs VALUES (8, 'Full-time Student', 8);
+INSERT INTO jobs VALUES (9, 'Full-time Student', 9);
+
+
+-- Generated a list of the tv characters including their full name, their respective show, and that their job/career was by joining the jobs table.
+SELECT tv_characters.fullname, tv_characters.tv_show, jobs.name FROM tv_characters
+    JOIN jobs
+    ON tv_characters.id = jobs.job_id;
+    
