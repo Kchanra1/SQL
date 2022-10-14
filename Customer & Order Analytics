@@ -44,3 +44,8 @@ SELECT product, SUM(quantity)
 FROM bit_db.febsales
 WHERE location LIKE '%Los Angeles%'
 GROUP BY product;
+
+
+
+
+
