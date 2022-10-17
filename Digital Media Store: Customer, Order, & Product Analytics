@@ -12,7 +12,7 @@ FROM chinook.customers
 WHERE country = 'Brazil'
 
 -- Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
-SELECT customers.firstname, customers.LastName, invoices.invoiceid, invoices.invoicedate, invoices.billingcountry
+SELECT customers.firstname, customers.LastName, invoices.invoiceid, invoices.billingcountry, invoices.invoicedate
 FROM chinook.customers
 LEFT JOIN chinook.invoices
 ON customers.customerid=invoices.customerid
@@ -21,7 +21,16 @@ WHERE invoices.billingcountry = 'Brazil';
 -- Show all employee information for those who are Sales Agents.
 SELECT *
 FROM chinook.employees
-WHERE title LIKE '%Sales%' AND title LIKE '%Agent%';
+WHERE title = 'Sales Support Agent';
+
+-- Find a unique/distinct list of billing countries from the Invoice table.
+SELECT DISTINCT BillingCountry FROM chinook.Invoices ;
+
+-- Provide a query that shows the invoices associated with each sales agent (include the Sales Agent's full name).
+SELECT employees.lastname, employees.firstname, invoices.invoiceid
+FROM chinook.employees
+JOIN chinook.customers ON employees.employeeid=customers.supportrepid
+JOIN chinook.invoices ON invoices.customerid=customers.customerid;
 
 -- Find the customer ids, full names, and full billing address information from invoices with the billing country as USA where the invoice date was past 2013-01-19.
 SELECT invoices.invoicedate, customers.customerid, customers.firstname, customers.lastname, invoices.billingaddress, invoices.billingcity, invoices.billingstate, invoices.billingcountry, invoices.billingpostalcode
@@ -35,3 +44,5 @@ ORDER BY invoicedate DESC;
 SELECT COUNT(invoiceid) AS 'Invoices Sent 2009-2013'
 FROM chinook.invoices
 WHERE invoices.invoicedate BETWEEN '2009%' AND '2013%';
+
+--
