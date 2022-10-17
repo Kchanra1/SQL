@@ -1,0 +1,37 @@
+
+
+
+-- Show customers (their full names, customer ID, and country) who are not in the US.
+SELECT customerid, customers.firstname, customers.LastName, country
+FROM chinook.customers
+WHERE country <> 'USA'
+
+-- Show all information of Customers from Brazil.
+SELECT *
+FROM chinook.customers
+WHERE country = 'Brazil'
+
+-- Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
+SELECT customers.firstname, customers.LastName, invoices.invoiceid, invoices.invoicedate, invoices.billingcountry
+FROM chinook.customers
+LEFT JOIN chinook.invoices
+ON customers.customerid=invoices.customerid
+WHERE invoices.billingcountry = 'Brazil';
+
+-- Show all employee information for those who are Sales Agents.
+SELECT *
+FROM chinook.employees
+WHERE title LIKE '%Sales%' AND title LIKE '%Agent%';
+
+-- Find the customer ids, full names, and full billing address information from invoices with the billing country as USA where the invoice date was past 2013-01-19.
+SELECT invoices.invoicedate, customers.customerid, customers.firstname, customers.lastname, invoices.billingaddress, invoices.billingcity, invoices.billingstate, invoices.billingcountry, invoices.billingpostalcode
+FROM chinook.customers
+LEFT JOIN chinook.invoices
+ON customers.customerid=invoices.customerid
+WHERE invoices.billingcountry = 'USA' AND invoices.invoicedate >= '2012-01-19%'
+ORDER BY invoicedate DESC;
+
+-- How many invoices were sent between 2009 and 2013?
+SELECT COUNT(invoiceid) AS 'Invoices Sent 2009-2013'
+FROM chinook.invoices
+WHERE invoices.invoicedate BETWEEN '2009%' AND '2013%';
