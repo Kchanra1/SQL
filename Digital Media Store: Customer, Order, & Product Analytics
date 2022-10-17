@@ -1,5 +1,17 @@
 
-
+# I took a moment to learn the tables and the information availabile using the following to quickly recall data:
+SELECT * FROM chinook.albums LIMIT 5;
+SELECT * FROM chinook.artists LIMIT 5;
+SELECT * FROM chinook.customers LIMIT 5;
+SELECT * FROM chinook.employees LIMIT 5;
+SELECT * FROM chinook.genres LIMIT 5;
+SELECT * FROM chinook.invoice_items LIMIT 5;
+SELECT * FROM chinook.invoices LIMIT 5;
+SELECT * FROM chinook.media_types LIMIT 5;
+SELECT * FROM chinook.media_types LIMIT 5;
+SELECT * FROM chinook.playlist_track LIMIT 5;
+SELECT * FROM chinook.playlists LIMIT 5;
+SELECT * FROM chinook.tracks LIMIT 5;
 
 -- Show customers (their full names, customer ID, and country) who are not in the US.
 SELECT customerid, customers.firstname, customers.LastName, country
@@ -24,7 +36,7 @@ FROM chinook.employees
 WHERE title = 'Sales Support Agent';
 
 -- Find a unique/distinct list of billing countries from the Invoice table.
-SELECT DISTINCT BillingCountry FROM chinook.Invoices ;
+SELECT distinct billingcountry FROM chinook.invoices ;
 
 -- Provide a query that shows the invoices associated with each sales agent (include the Sales Agent's full name).
 SELECT employees.lastname, employees.firstname, invoices.invoiceid
@@ -45,4 +57,45 @@ SELECT COUNT(invoiceid) AS 'Invoices Sent 2009-2013'
 FROM chinook.invoices
 WHERE invoices.invoicedate BETWEEN '2009%' AND '2013%';
 
---
+-- Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+SELECT customers.lastname, customers.firstname, invoices.billingcountry, invoices.total, employees.lastname, employees.FirstName
+FROM chinook.employees
+JOIN chinook.customers ON employees.employeeid=customers.SupportRepId
+JOIN chinook.invoices ON customers.customerid=invoices.customerid;
+
+-- How many Invoices were there in 2009?
+SELECT COUNT(invoiceid)
+FROM chinook.invoices
+WHERE invoices.invoicedate BETWEEN '2009-01-01' AND '2009-12-31';
+
+-- What are the total sales for 2009?
+SELECT SUM(Total)
+FROM chinook.invoices
+WHERE invoices.invoicedate BETWEEN '2009-01-01' AND '2009-12-31';
+
+-- Write a query that includes the purchased track name with each invoice line ID.
+SELECT tracks.name, invoice_items.invoicelineid
+FROM chinook.tracks
+JOIN chinook.invoice_items ON tracks.trackid=invoice_items.trackid;
+
+-- Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT artists.name AS Artist, tracks.name AS Track, invoice_items.InvoiceLineId
+FROM chinook.invoice_items
+LEFT JOIN chinook.tracks ON invoice_items.TrackID=tracks.TrackID
+INNER JOIN chinook.albums ON albums.AlbumID=tracks.AlbumID
+LEFT JOIN chinook.artists ON artists.ArtistID=albums.ArtistID;
+
+-- Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+SELECT tracks.Name AS 'Track Name', albums.Title AS 'Album Title', media_types.Name AS 'Media Type', genres.Name AS 'Genre'
+FROM chinook.tracks
+JOIN chinook.Albums ON albums.AlbumId = tracks.AlbumId
+JOIN chinook.Media_Types ON media_types.MediaTypeId = tracks.MediaTypeId
+JOIN chinook.Genres ON genres.GenreId = tracks.GenreId;
+
+
+-- Show the total sales made by each sales agent.
+SELECT employees.employeeid, employees.FirstName, employees.LastName, SUM(invoices.total) AS 'Total Sales' 
+FROM chinook.employees
+LEFT JOIN chinook.customers ON employees.employeeid=customers.SupportRepId
+LEFT JOIN chinook.invoices ON customers.customerid=invoices.customerid
+GROUP BY employees.employeeid;
